@@ -1,0 +1,10 @@
+Test kyano
+Vẽ sơ đồ 2 mode client và company
+Code giao diện chức năng, validate, auth
+Github tạo theo collab để theo dõi và edit code, tạo readme cách code chạy.
+Framework react.
+Có thể dùng hoặc k: TypeScript, unit testing, responsive, animation(thư viện có sẵn)
+
+14/3: làm giao diện 
+15/3: validate và auth
+16/3
