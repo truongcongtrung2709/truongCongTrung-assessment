@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signin } from "../../authSlide/authSlide";
 import "./signin.scss";
 const Signin = () => {
+  const dispatch = useDispatch();
+  const {user, loading, error} = useSelector((state) => state.auth)
   const navigate = useNavigate();
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { email: "", password: "" },
@@ -21,9 +25,7 @@ const Signin = () => {
   const { errors } = formState;
   const onSubmit = (values) => {
     console.log(values);
-    alert(`Đăng Nhập Thành Công!! \nXin chào ${values.email}
-    `);
-    navigate("/profile");
+    dispatch(signin(values));
   };
   return (
     <div className="login form container ">
@@ -85,7 +87,8 @@ const Signin = () => {
             <label htmlFor="">Show password</label>
           </div>
           <div className="submitBtn animate__animated animate__fadeInUp animate__delay-4s">
-            <button>Sign in</button>
+            <button disabled={loading}>Sign in</button>
+            {error && <p>Email or Password is incorrect}</p>}
           </div>
         </div>
       </form>
