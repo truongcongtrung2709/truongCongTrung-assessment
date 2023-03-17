@@ -2,10 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./profile.scss";
+import { useDispatch, useSelector } from "react-redux";
+import logout from "../../slides/authSlide";
 const Profile = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   const handleCancel = () => {
-    navigate("/");
+    dispatch(logout());
   };
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { fullName: "", dayOfBirth: "", email: "", phone: "" },

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { signin } from "../../authSlide/authSlide";
+import { Navigate } from "react-router-dom";
+import { signin } from "../../slides/authSlide";
 import "./signin.scss";
 const Signin = () => {
   const dispatch = useDispatch();
-  const {user, loading, error} = useSelector((state) => state.auth)
-  const navigate = useNavigate();
+  const { user, loading, error } = useSelector((state) => state.auth);
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { email: "", password: "" },
     mode: "onTouched",
@@ -27,6 +26,9 @@ const Signin = () => {
     console.log(values);
     dispatch(signin(values));
   };
+  if (user) {
+    return <Navigate to="/profile" replace />;
+  }
   return (
     <div className="login form container ">
       <h1 className=" animate__animated animate__fadeInDown animate__delay-0.5s">
@@ -88,7 +90,7 @@ const Signin = () => {
           </div>
           <div className="submitBtn animate__animated animate__fadeInUp animate__delay-4s">
             <button disabled={loading}>Sign in</button>
-            {error && <p>Email or Password is incorrect}</p>}
+            {error && <p>Email or Password is incorrect</p>}
           </div>
         </div>
       </form>
