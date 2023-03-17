@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import "./profile.scss";
+import {update} from "../../authSlide/authSlide";
+import { useDispatch, useSelector } from "react-redux";
 const Profile = () => {
-  const navigate = useNavigate();
-  const handleCancel = () => {
-    navigate("/");
-  };
-  const { register, handleSubmit, formState } = useForm({
-    defaultValues: { fullName: "", dayOfBirth: "", email: "", phone: "" },
+  const {user} = useSelector((state)=> state.auth)
+  const dispatch = useDispatch();
+  // const handleCancel = () => {
+  //   navigate("/");
+  // };
+  const { register, handleSubmit,reset, formState } = useForm({
+    
+    defaultValues: {taiKhoan: user.taiKhoan,matKhau: "", maLoaiNguoiDung: user.maLoaiNguoiDung ,hoTen: user.hoTen, email: user.email, soDT: user.soDT },
     mode: "onTouched",
   });
   const { errors } = formState;
   const onSubmit = (values) => {
-    console.log(values);
+    // console.log(values);
+    dispatch(update(values));
+    reset(formValue => ({
+      ...formValue, matKhau: ""
+    }))
+    
   };
+
   return (
     <div className="profile form container ">
       <h1 className=" animate__animated animate__fadeInDown animate__delay-0.5s">
@@ -24,11 +34,45 @@ const Profile = () => {
         className="form-profile form-content"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
+          <label htmlFor="">Account:</label>
+          <input
+          disabled
+            type="text"
+            {...register("taiKhoan", {
+             
+            })}
+          />
+          {errors.taiKhoan && <span>{errors.taiKhoan.message};</span>}
+        </div>
+        
+        <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
+          <label htmlFor="">Type:</label>
+          <input
+          disabled
+            type="text"
+            {...register("maLoaiNguoiDung", {
+             
+            })}
+          />
+          {errors.maLoaiNguoiDung && <span>{errors.maLoaiNguoiDung.message};</span>}
+        </div>
+
+        <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
+          <label htmlFor="">MatKhau:</label>
+          <input
+            type="text"
+            {...register("matKhau", {
+             
+            })}
+          />
+          {errors.matKhau && <span>{errors.matKhau.message};</span>}
+        </div>
         <div className="form-item fullName animate__animated animate__fadeInRight animate__delay-1s">
           <label htmlFor="">Full name:</label>
           <input
             type="text"
-            {...register("fullName", {
+            {...register("hoTen", {
               required: {
                 value: true,
                 message: "Full Name is required",
@@ -39,21 +83,9 @@ const Profile = () => {
               },
             })}
           />
-          {errors.fullName && <span>{errors.fullName.message};</span>}
+          {errors.hoTen && <span>{errors.hoTen.message};</span>}
         </div>
-        <div className="form-item dayOfBirth animate__animated animate__fadeInRight animate__delay-1s">
-          <label htmlFor="">Day Of Birth:</label>
-          <input
-            type="date"
-            {...register("dayOfBirth", {
-              required: {
-                value: true,
-                message: "Choose your day of birth",
-              },
-            })}
-          />
-          {errors.dayOfBirth && <span>{errors.dayOfBirth.message}</span>}
-        </div>
+        
         <div className="form-item email animate__animated animate__fadeInRight animate__delay-2s">
           <label htmlFor="">Email:</label>
           <input
@@ -75,7 +107,7 @@ const Profile = () => {
           <label htmlFor="">Phone:</label>
           <input
             type="number"
-            {...register("phone", {
+            {...register("soDT", {
               required: {
                 value: true,
                 message: "Phone is required",
@@ -86,7 +118,7 @@ const Profile = () => {
               },
             })}
           />
-          {errors.phone && <span>{errors.phone.message}</span>}
+          {errors.soDT && <span>{errors.soDT.message}</span>}
         </div>
         <div className="buttons">
           <button className="updateBtn form-item email animate__animated animate__fadeInUp animate__delay-1s">
@@ -94,7 +126,7 @@ const Profile = () => {
           </button>
           <button
             className="cancelBtn animate__animated animate__fadeInUp animate__delay-2s"
-            onClick={handleCancel}
+            // onClick={handleCancel}
           >
             Cancel
           </button>

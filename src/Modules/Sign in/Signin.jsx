@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams, Navigate } from "react-router-dom";
 import { signin } from "../../authSlide/authSlide";
 import "./signin.scss";
 const Signin = () => {
+  const [searchParams, setSearchParams] = useSearchParams() 
   const dispatch = useDispatch();
   const {user, loading, error} = useSelector((state) => state.auth)
-  const navigate = useNavigate();
   const { register, handleSubmit, formState } = useForm({
-    defaultValues: { email: "", password: "" },
+    defaultValues: { taiKhoan: "", matKhau: "" },
     mode: "onTouched",
   });
   const [type, setType] = useState("password");
@@ -27,7 +27,12 @@ const Signin = () => {
     console.log(values);
     dispatch(signin(values));
   };
-  return (
+if(user){
+  const redirectUrl = searchParams.get("redirectUrl")
+  return <Navigate to={redirectUrl || "/profile"} />
+    
+}  
+   return (
     <div className="login form container ">
       <h1 className=" animate__animated animate__fadeInDown animate__delay-0.5s">
         Login
@@ -43,26 +48,26 @@ const Signin = () => {
           <input
             type="text"
             placeholder="example@kyanon.digital"
-            {...register("email", {
+            {...register("taiKhoan", {
               required: {
                 value: true,
                 message: "Email is required",
               },
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "invalid Email",
-              },
+              // pattern: {
+              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              //   message: "invalid Email",
+              // },
             })}
           />
         </div>
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.taiKhoan && <span>{errors.taiKhoan.message}</span>}
 
         <div className="form-item password animate__animated animate__fadeInRight animate__delay-2s">
           <label htmlFor="">Password:</label>
           <input
             type={type}
             placeholder="******"
-            {...register("password", {
+            {...register("matKhau", {
               required: {
                 value: true,
                 message: "Password is required",
@@ -80,7 +85,7 @@ const Signin = () => {
             })}
           />
         </div>
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.matKhau && <span>{errors.matKhau.message}</span>}
         <div className="footer ">
           <div className="showPW animate__animated animate__fadeInUp animate__delay-3s">
             <input type="checkbox" onChange={handleChange} />
@@ -88,7 +93,7 @@ const Signin = () => {
           </div>
           <div className="submitBtn animate__animated animate__fadeInUp animate__delay-4s">
             <button disabled={loading}>Sign in</button>
-            {error && <p>Email or Password is incorrect}</p>}
+            {error && <p>Email or Password is incorrect</p>}
           </div>
         </div>
       </form>
