@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import "./profile.scss";
-import {update} from "../../slices/authSlice";
+import {update,logout} from "../../slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Profile = () => {
   const {user} = useSelector((state)=> state.auth)
   const dispatch = useDispatch();
-  // const handleCancel = () => {
-  //   navigate("/");
-  // };
+  
   const { register, handleSubmit,reset, formState } = useForm({
     
     defaultValues: {taiKhoan: user.taiKhoan,matKhau: "", maLoaiNguoiDung: user.maLoaiNguoiDung ,hoTen: user.hoTen, email: user.email, soDT: user.soDT },
@@ -16,13 +14,17 @@ const Profile = () => {
   });
   const { errors } = formState;
   const onSubmit = (values) => {
-    // console.log(values);
+    console.log(values);
     dispatch(update(values));
     reset(formValue => ({
       ...formValue, matKhau: ""
     }))
     
   };
+  const handleLogout = ()=>{
+    dispatch(logout());
+    alert("Logged out")
+  }
 
   return (
     <div className="profile form container ">
@@ -45,7 +47,7 @@ const Profile = () => {
           {errors.taiKhoan && <span>{errors.taiKhoan.message};</span>}
         </div>
         
-        <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
+        <div className="form-item loaiNguoiDung animate__animated animate__fadeInRight animate__delay-1s">
           <label htmlFor="">Type:</label>
           <input
           disabled
@@ -58,11 +60,24 @@ const Profile = () => {
         </div>
 
         <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
-          <label htmlFor="">MatKhau:</label>
+          <label htmlFor="">Password:</label>
           <input
             type="text"
             {...register("matKhau", {
-             
+             required:{
+              value: true,
+              message: "Enter your password"
+             },
+             minLength: {
+              value: 5,
+              message:
+                "Password must be minimum of 20 characters and at least 5 characters",
+            },
+            maxLength: {
+              value: 20,
+              message:
+                "Password must be minimum of 20 characters and at least 5 characters",
+            },
             })}
           />
           {errors.matKhau && <span>{errors.matKhau.message};</span>}
@@ -125,9 +140,9 @@ const Profile = () => {
           </button>
           <button
             className="cancelBtn animate__animated animate__fadeInUp animate__delay-2s"
-            // onClick={handleCancel}
+            onClick={handleLogout}
           >
-            Cancel
+            Log Out
           </button>
         </div>
       </form>

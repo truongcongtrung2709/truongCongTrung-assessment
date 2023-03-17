@@ -41,22 +41,19 @@ if(user){
         className="form-login form-content"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="form-item email animate__animated animate__fadeInRight animate__delay-1s">
+        <div className="form-item account animate__animated animate__fadeInRight animate__delay-1s">
           <label className=" " htmlFor="">
-            Email:
+            Account:
           </label>
           <input
             type="text"
-            placeholder="example@kyanon.digital"
+            placeholder="example"
             {...register("taiKhoan", {
               required: {
                 value: true,
-                message: "Email is required",
+                message: "Account is required",
               },
-              // pattern: {
-              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              //   message: "invalid Email",
-              // },
+              
             })}
           />
         </div>
@@ -72,16 +69,16 @@ if(user){
                 value: true,
                 message: "Password is required",
               },
-              minLength: {
-                value: 5,
-                message:
-                  "Password must be minimum of 20 characters and at least 5 characters",
-              },
-              maxLength: {
-                value: 20,
-                message:
-                  "Password must be minimum of 20 characters and at least 5 characters",
-              },
+                minLength: {
+                  value: 5,
+                  message:
+                    "Password must be minimum of 20 characters and at least 5 characters",
+                },
+                maxLength: {
+                  value: 20,
+                  message:
+                    "Password must be minimum of 20 characters and at least 5 characters",
+                },
             })}
           />
         </div>
@@ -93,9 +90,11 @@ if(user){
           </div>
           <div className="submitBtn animate__animated animate__fadeInUp animate__delay-4s">
             <button disabled={loading}>Sign in</button>
-            {error && <p>Email or Password is incorrect</p>}
+           
           </div>
         </div>
+        {error && <span className="errorMessage">Email or Password is incorrect</span>}
+
       </form>
     </div>
   );
