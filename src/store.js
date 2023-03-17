@@ -1,8 +1,8 @@
-import {configureStore} from "@reduxjs/toolkit"
-import auth from "./authSlide/authSlide"
+import { configureStore } from "@reduxjs/toolkit";
+import auth from "./slides/authSlide";
 const store = configureStore({
-    reducer:{
-        auth,
-    }
-})
+  reducer: {
+    auth,
+  },
+});
 export default store;
