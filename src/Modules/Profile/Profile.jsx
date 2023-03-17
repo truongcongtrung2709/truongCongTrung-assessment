@@ -1,30 +1,52 @@
 import React, { useEffect } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import "./profile.scss";
-import {update,logout} from "../../slices/authSlice";
+import { getUser } from "../../slices/userSlice";
+import { logout } from "../../slices/authSlice";
+import userAPI from "../../services/userAPI";
 import { useDispatch, useSelector } from "react-redux";
 const Profile = () => {
-  const {user} = useSelector((state)=> state.auth)
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  
-  const { register, handleSubmit,reset, formState } = useForm({
-    
-    defaultValues: {taiKhoan: user.taiKhoan,matKhau: "", maLoaiNguoiDung: user.maLoaiNguoiDung ,hoTen: user.hoTen, email: user.email, soDT: user.soDT },
+  const { register, handleSubmit, reset, formState } = useForm({
+    defaultValues: {
+      taiKhoan: "",
+      matKhau: "",
+      maLoaiNguoiDung: "",
+      hoTen: "",
+      email: "",
+      soDT: "",
+    },
     mode: "onTouched",
   });
   const { errors } = formState;
-  const onSubmit = (values) => {
-    console.log(values);
-    dispatch(update(values));
-    reset(formValue => ({
-      ...formValue, matKhau: ""
-    }))
-    
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  useEffect(() => {
+    reset({
+      taiKhoan: user?.taiKhoan,
+      matKhau: user?.matKhau,
+      maLoaiNguoiDung: user?.maLoaiNguoiDung,
+      hoTen: user?.hoTen,
+      email: user?.email,
+      soDT: user?.soDT,
+    });
+  }, [user]);
+
+  const onSubmit = async (values) => {
+    try {
+      await userAPI.updateUser(values);
+      dispatch(getUser());
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     dispatch(logout());
-    alert("Logged out")
-  }
+  };
 
   return (
     <div className="profile form container ">
@@ -37,26 +59,16 @@ const Profile = () => {
       >
         <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
           <label htmlFor="">Account:</label>
-          <input
-          disabled
-            type="text"
-            {...register("taiKhoan", {
-             
-            })}
-          />
+          <input disabled type="text" {...register("taiKhoan", {})} />
           {errors.taiKhoan && <span>{errors.taiKhoan.message};</span>}
         </div>
-        
+
         <div className="form-item loaiNguoiDung animate__animated animate__fadeInRight animate__delay-1s">
           <label htmlFor="">Type:</label>
-          <input
-          disabled
-            type="text"
-            {...register("maLoaiNguoiDung", {
-             
-            })}
-          />
-          {errors.maLoaiNguoiDung && <span>{errors.maLoaiNguoiDung.message};</span>}
+          <input disabled type="text" {...register("maLoaiNguoiDung", {})} />
+          {errors.maLoaiNguoiDung && (
+            <span>{errors.maLoaiNguoiDung.message};</span>
+          )}
         </div>
 
         <div className="form-item taiKhoan animate__animated animate__fadeInRight animate__delay-1s">
@@ -64,20 +76,20 @@ const Profile = () => {
           <input
             type="text"
             {...register("matKhau", {
-             required:{
-              value: true,
-              message: "Enter your password"
-             },
-             minLength: {
-              value: 5,
-              message:
-                "Password must be minimum of 20 characters and at least 5 characters",
-            },
-            maxLength: {
-              value: 20,
-              message:
-                "Password must be minimum of 20 characters and at least 5 characters",
-            },
+              required: {
+                value: true,
+                message: "Enter your password",
+              },
+              minLength: {
+                value: 5,
+                message:
+                  "Password must be minimum of 20 characters and at least 5 characters",
+              },
+              maxLength: {
+                value: 20,
+                message:
+                  "Password must be minimum of 20 characters and at least 5 characters",
+              },
             })}
           />
           {errors.matKhau && <span>{errors.matKhau.message};</span>}
@@ -99,7 +111,7 @@ const Profile = () => {
           />
           {errors.hoTen && <span>{errors.hoTen.message};</span>}
         </div>
-        
+
         <div className="form-item email animate__animated animate__fadeInRight animate__delay-2s">
           <label htmlFor="">Email:</label>
           <input

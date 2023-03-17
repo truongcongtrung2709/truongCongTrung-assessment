@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams, Navigate } from "react-router-dom";
 import { signin } from "../../slices/authSlice";
-import "./signin.scss";
+import { getUser } from "../../slices/userSlice";
+import "./signinCSS.scss";
 const Signin = () => {
-  const [searchParams, setSearchParams] = useSearchParams() 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { accessToken, loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const {user, loading, error} = useSelector((state) => state.auth)
+
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { taiKhoan: "", matKhau: "" },
     mode: "onTouched",
@@ -22,17 +24,18 @@ const Signin = () => {
     }
     setChecked((current) => !current);
   };
+
   const { errors } = formState;
+
   const onSubmit = (values) => {
-    console.log(values);
     dispatch(signin(values));
   };
-if(user){
-  const redirectUrl = searchParams.get("redirectUrl")
-  return <Navigate to={redirectUrl || "/profile"} />
-    
-}  
-   return (
+
+  if (accessToken) {
+    const redirectUrl = searchParams.get("redirectUrl");
+    return <Navigate to={redirectUrl || "/profile"} />;
+  }
+  return (
     <div className="login form container ">
       <h1 className=" animate__animated animate__fadeInDown animate__delay-0.5s">
         Login
@@ -53,7 +56,6 @@ if(user){
                 value: true,
                 message: "Account is required",
               },
-              
             })}
           />
         </div>
@@ -69,16 +71,16 @@ if(user){
                 value: true,
                 message: "Password is required",
               },
-                minLength: {
-                  value: 5,
-                  message:
-                    "Password must be minimum of 20 characters and at least 5 characters",
-                },
-                maxLength: {
-                  value: 20,
-                  message:
-                    "Password must be minimum of 20 characters and at least 5 characters",
-                },
+              minLength: {
+                value: 5,
+                message:
+                  "Password must be minimum of 20 characters and at least 5 characters",
+              },
+              maxLength: {
+                value: 20,
+                message:
+                  "Password must be minimum of 20 characters and at least 5 characters",
+              },
             })}
           />
         </div>
@@ -90,11 +92,11 @@ if(user){
           </div>
           <div className="submitBtn animate__animated animate__fadeInUp animate__delay-4s">
             <button disabled={loading}>Sign in</button>
-           
           </div>
         </div>
-        {error && <span className="errorMessage">Email or Password is incorrect</span>}
-
+        {error && (
+          <span className="errorMessage">Email or Password is incorrect</span>
+        )}
       </form>
     </div>
   );

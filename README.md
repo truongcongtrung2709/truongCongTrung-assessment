@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Login, Edit Profile Assessment Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## A fully functional project written in React showing Login page and edit profile page.
 
-## Available Scripts
+This project was built with ReactJS showing Client can login and edit profile with the API from Cybersoft's API(Academy where i was studied)
+Every part of this project is sample code which show how to build this project:
 
-In the project directory, you can run:
+- Create a sketch of the authentication flow of the login function. the file in the respository with a name: authentication-flow.pdf
+- Create a login and edit profile interface with SCSS and animation from animate.style
+- API get from Cybersoft Bootcamp(where i was studied):
+  - Cybersoft's swagger: https://movienew.cybersoft.edu.vn/swagger/index.html
+  - Cybersoft token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMiIsIkhldEhhblN0cmluZyI6IjE3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MTY4OTYwMDAwMCIsIm5iZiI6MTY1MzkzMDAwMCwiZXhwIjoxNjgxODM3MjAwfQ.Yk1H5QCjda1n9Cd5-k2yU_DLnRqRvaB7FIkn1hIuPE0
+  - Account i used for login:
+    account: 250196
+    password: 123456
+- After login, you have to fill all inputs then submit update the profile, and the updated profile will showing all values you changed in every inputs.
 
-### `npm start`
+## Image of the sketch of the authentication flow of the login function
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  <img src="./authentication-flow.pdf" width="240" height="180" border="10">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Libraries
 
-### `npm test`
+- API: axios
+- Router: react-router-dom
+- Hooks: react-hook-form
+- State Management: @reduxjs/toolkit, react-redux
+- animations: react-icons
+- UI: SCSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Folder structure
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- modules:
+  - Group of 1 function components or 1 page
+  - these components usually have some logical like: call API, redux,...
+- routers:
+  - Use for define actions of router.
+- Services:
+  - Use for contain setup of call API and other function use API
+- store.js:
+  - setup redux store
