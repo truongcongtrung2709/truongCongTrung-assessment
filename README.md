@@ -17,9 +17,10 @@ Every part of this project is sample code which show how to build this project:
 
 ## Image of the sketch of the authentication flow of the login function
 
-<img src={require('./authentication-flow.png')} width="240" height="180" border="10">
+[Uploading authentication-flow.png…]()
 
-## Libraries
+## Libraries!
+
 
 - API: axios
 - Router: react-router-dom
