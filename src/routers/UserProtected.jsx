@@ -6,7 +6,7 @@ const UserProtected = ({children}) => {
     const {user} = useSelector(state => state.auth)
     const location = useLocation();
     if(!user){
-        const redirectUrl = `/signin?redirectUrl=${location.pathname}`
+        const redirectUrl = `/?redirectUrl=${location.pathname}`
         return <Navigate to={redirectUrl} replace/>
     }
   return children

@@ -34,7 +34,7 @@ export const update = createAsyncThunk("auth/update", async (values) => {
     }
 })
 
-const authSlide = createSlice({name:"auth",
+const authSlice = createSlice({name:"auth",
 initialState,
 
 extraReducers:(builder) => {
@@ -61,4 +61,4 @@ extraReducers:(builder) => {
 
 })
 
-export default authSlide.reducer;
+export default authSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams, Navigate } from "react-router-dom";
-import { signin } from "../../authSlide/authSlide";
+import { signin } from "../../slices/authSlice";
 import "./signin.scss";
 const Signin = () => {
   const [searchParams, setSearchParams] = useSearchParams() 

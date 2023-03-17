@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm, useFormState } from "react-hook-form";
 import "./profile.scss";
-import {update} from "../../authSlide/authSlide";
+import {update} from "../../slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Profile = () => {
   const {user} = useSelector((state)=> state.auth)
